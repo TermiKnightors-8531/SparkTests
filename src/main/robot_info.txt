@@ -1,0 +1,14 @@
+CAN IDs:
+0: Power Distribution Panel
+1: Left Front
+2: Left Rear
+3: Right Front
+4: Right Rear
+
+    _____________
+    |           |
+    |lf(1) rf(3)|
+    |           |
+    |           |   
+    |lr(2) rr(4)|
+    |___________|
