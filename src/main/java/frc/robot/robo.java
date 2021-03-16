@@ -8,6 +8,13 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+/* 
+* This class served as a good test, but for the sake of making the code less verbose and more modular,
+* separate classes with individual methods and constructors have been used. 
+*/
+
+
+@Deprecated
 public class robo extends TimedRobot{
     XboxController xb = new XboxController(0);
     DifferentialDrive front;            //drive to control the two front motors
