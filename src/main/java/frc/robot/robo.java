@@ -40,7 +40,8 @@ public class robo extends TimedRobot{
     
     @Override
     public void teleopPeriodic(){
-        syncDrive();                    
+        syncDrive();
+                            
     }
 
     //functions to drive both front and rear motors at the same time
