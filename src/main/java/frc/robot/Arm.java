@@ -54,4 +54,10 @@ public class Arm {
     public void reverseIntake() {
         intakeMotor.set(ControlMode.PercentOutput, -intakeSpeed);
     }
+
+    public void test_arm(){
+        armMotor.set(ControlMode.PercentOutput, .5);
+    }
+
+
 }
