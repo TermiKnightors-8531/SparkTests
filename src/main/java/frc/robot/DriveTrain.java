@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 
 public class DriveTrain {
-    //instances of side for both left and right side
+    //instances of side for both left and right side (container for left and right wheel motor controllers)
     private side left, right; 
 
     //constructor with two sides 
