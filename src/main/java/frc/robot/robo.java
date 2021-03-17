@@ -1,3 +1,7 @@
+/*
+* THIS CLASS HAS BEEN DEPRECATED
+*/
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
