@@ -26,7 +26,7 @@ public class RobotAssembly extends TimedRobot{
     //TEMP motor test
     @Override
     public void autonomousPeriodic() {
-        a.test_arm();
+        
     }
 
     @Override
@@ -34,9 +34,9 @@ public class RobotAssembly extends TimedRobot{
 
     }
 
+    @Override
     public void teleopPeriodic() {
         this.dt.drive(xb);
-
 
     }
 
