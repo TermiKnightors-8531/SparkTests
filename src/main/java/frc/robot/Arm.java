@@ -30,12 +30,18 @@ public class Arm {
     private final int maxCurrentUp = 0;
     private final int maxCurrentDown = 0;
 
+    //instance of enum to hold type of arm controller used
+    public static ArmController armController;
+
+    //instance of limiting type
+    public static Limit l;
+
     /*
     * Base Constructor for Arm
     * @param armID: the CAN ID of the arm motor controller
     * @param intakeID: the CAN ID of the intake motor controller
     */
-    public Arm(int armID, int intakeID, ArmController armController) {
+    public Arm(int armID, int intakeID, ArmController armController, Limit l) {
         this.armID = armID;
         this.intakeID = intakeID;
         this.armMotor = new VictorSPX(armID);
@@ -53,8 +59,8 @@ public class Arm {
     * @param DigitalInput upSwitch: DIO port of the upper limit switch
     * @param DigitalInput downSwitch: DIO port of the lower limit switch
     */
-    public Arm (int armID, int intakeID, ArmController armController, DigitalInput upSwitch, DigitalInput downSwitch){
-        this(armID, intakeID, armController);
+    public Arm (int armID, int intakeID, ArmController armController, Limit l, DigitalInput upSwitch, DigitalInput downSwitch){
+        this(armID, intakeID, armController, l);
         this.upSwitch = upSwitch;
         this.downSwitch = downSwitch;
         armMotor.configFactoryDefault();
@@ -72,8 +78,8 @@ public class Arm {
     * @param intakeChannel: the channel of the motor 
     * @param intakeSpeed: speed of arm 
     */ 
-    public Arm (int armID, int intakeID, ArmController armController, int armChannel, int intakeChannel){
-        this(armID, intakeID, armController);
+    public Arm (int armID, int intakeID, ArmController armController, Limit l, int armChannel, int intakeChannel){
+        this(armID, intakeID, armController, l);
         this.armChannel = armChannel;
         this.intakeChannel = intakeChannel;
         armMotor.configFactoryDefault();
@@ -119,6 +125,14 @@ public class Arm {
         intakeMotor.set(ControlMode.PercentOutput, -intakeSpeed);
     }
 
+    public static ArmController getArmController() {
+        return armController;
+    }
+
+    //returns the selected limit method
+    public static Limit getLimt() {
+        return l;
+    }
     //enum for selecting what type of control is to be used for the arm
     //allows the arm and intake to be controlled through one XBoxController (that is also used for driving the robot)
     //or a second joystick (entirely separate from the driving portion), allowing two members of the team to drive the robot
@@ -130,5 +144,19 @@ public class Arm {
             this.h = h;
         }
     };
+
+    public enum Limit {
+        dio,
+        current,
+        hybridUp,
+        hybridDown;
+
+        private Limit (String s){
+
+        }
+        private Limit (){
+            
+        }
+    }
 
 }

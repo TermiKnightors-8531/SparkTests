@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Arm.ArmController;
+import frc.robot.Arm.Limit;
 
 public final class Main {
   private Main() {}
@@ -28,7 +29,7 @@ public final class Main {
 
     //Creates an arm with a CAN ID of the 10 for the arm motor and a CAN ID of 11 for the intake motor
     //upwards limit switch created on Digital Input/Output port 0 and downwards limit switch created on Digital Input/Output port 1 
-    Arm a = new Arm(10, 11, ArmController.xbox, new DigitalInput(0), new DigitalInput(1));
+    Arm a = new Arm(10, 11, ArmController.xbox, Limit.current, new DigitalInput(0), new DigitalInput(1));
    
     //Creates an XbobxController on port 0 as seen in the driver station
     xb = new XboxController(0);
