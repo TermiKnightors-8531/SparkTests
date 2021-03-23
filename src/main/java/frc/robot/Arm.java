@@ -94,20 +94,22 @@ public class Arm {
 
     //method to raise arm while limit switch has not been pressed
     public void raiseArm () {
-        if(upSwitch.get())return;       //returns if arm is up
-        while(!upSwitch.get()){
-            armMotor.set(ControlMode.PercentOutput, .5);
-        }
-            armMotor.set(ControlMode.Disabled, 0);
+        //TODO fix method to work with enum
+        // if(upSwitch.get())return;       //returns if arm is up
+        // while(!upSwitch.get()){
+        //     armMotor.set(ControlMode.PercentOutput, .5);
+        // }
+        //     armMotor.set(ControlMode.Disabled, 0);
     }
     
     //method to raise arm while limit switch has not been pressed
     public void lowerArm () {
-        if(downSwitch.get())return;     //returns if arm is down
-        while(!downSwitch.get()){
-            armMotor.set(ControlMode.PercentOutput, -.5);
-        }
-            armMotor.set(ControlMode.Disabled, 0);
+        //TODO fix to work with enum
+        // if(downSwitch.get())return;     //returns if arm is down
+        // while(!downSwitch.get()){
+        //     armMotor.set(ControlMode.PercentOutput, -.5);
+        // }
+        //     armMotor.set(ControlMode.Disabled, 0);
     }
 
     //starts intake motor and runs until the stopIntake method is invoked
