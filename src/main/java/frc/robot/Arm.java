@@ -1,64 +1,90 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 
 import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode.*;
 
 public class Arm {
+    //CAN IDs of the arm and intake motors 
     int armID,intakeID;
-    //TODO determine correct limit switch
+
+    //Digital Input ports to be used when limit switches are implemented
     DigitalInput upSwitch, downSwitch;
+
+    //Motor controllers for the arm and intake motors (CAN ID's set in the )
     VictorSPX armMotor,intakeMotor;
+
     //PowerDistribution Panel Channels for monitoring current
     private int armChannel, intakeChannel;
-    private double intakeSpeed = .5;
 
-    //constructor for creating an arm with ID's for VictorSPX controller
-    public Arm (int armID, int intakeID, DigitalInput upSwitch, DigitalInput downSwitch){
+    //Speed at which the arm moves and the motors spin to intake the balls
+    //TODO find best speed for arm and intake
+    private final double intakeSpeed = .5;
+
+    //ints to hold current which should not be exceeded (used for sensing the arm motor position)
+    private final int maxCurrentUp = 0;
+    private final int maxCurrentDown = 0;
+
+    /*
+    * Base Constructor for Arm
+    * @param armID: the CAN ID of the arm motor controller
+    * @param intakeID: the CAN ID of the intake motor controller
+    */
+    public Arm(int armID, int intakeID, ArmController armController) {
         this.armID = armID;
         this.intakeID = intakeID;
-        this.upSwitch = upSwitch;
-        this.downSwitch = downSwitch;
         this.armMotor = new VictorSPX(armID);
         this.intakeMotor = new VictorSPX(intakeID);
         armMotor.configFactoryDefault();
         armMotor.setNeutralMode(NeutralMode.Brake);
         intakeMotor.configFactoryDefault();
         intakeMotor.setNeutralMode(NeutralMode.Brake);
-
     }
 
-    /*constructor for creating an arm with ID's for VictorSPX controller and PowerDistributionPanel channels
+    /*
+    * Constructor for Arm with Limit Switches
+    * @param armID: the CAN ID of the arm motor controller
+    * @param intakeID: the CAN ID of the intake motor controller
+    * @param DigitalInput upSwitch: DIO port of the upper limit switch
+    * @param DigitalInput downSwitch: DIO port of the lower limit switch
+    */
+    public Arm (int armID, int intakeID, ArmController armController, DigitalInput upSwitch, DigitalInput downSwitch){
+        this(armID, intakeID, armController);
+        this.upSwitch = upSwitch;
+        this.downSwitch = downSwitch;
+        armMotor.configFactoryDefault();
+        armMotor.setNeutralMode(NeutralMode.Brake);
+        intakeMotor.configFactoryDefault();
+        intakeMotor.setNeutralMode(NeutralMode.Brake);
+    }
+
+
+    /*Constructor for Arm with PowerDistributionPanel channels for monitoring current
     * @param armID: the CAN ID of the arm
     * @param intakeID: the CAN ID of the intake motor
+    * @param armController: enum value to select the method of controlling the arm (selects between 1 or multiple joysticks)
     * @param armChannel: the channel of the motor controller for the arm 
     * @param intakeChannel: the channel of the motor 
-    * @param brake: if true: brake on idle / if false: coast on idle
     * @param intakeSpeed: speed of arm 
     */ 
-    public Arm (int armID, int intakeID, int armChannel, int intakeChannel, boolean brake, double intakeSpeed){
-        this.armID = armID;
-        this.intakeID = intakeID;
-        this.armMotor = new VictorSPX(armID);
-        this.intakeMotor = new VictorSPX(intakeID);
+    public Arm (int armID, int intakeID, ArmController armController, int armChannel, int intakeChannel){
+        this(armID, intakeID, armController);
         this.armChannel = armChannel;
         this.intakeChannel = intakeChannel;
         armMotor.configFactoryDefault();
         intakeMotor.configFactoryDefault();
-        if (brake) {
-            armMotor.setNeutralMode(NeutralMode.Brake);
-            intakeMotor.setNeutralMode(NeutralMode.Brake);
-        }
-        else {
-            armMotor.setNeutralMode(NeutralMode.Coast);
-            intakeMotor.setNeutralMode(NeutralMode.Coast);
-        }
-        this.intakeSpeed = intakeSpeed;
+        armMotor.setNeutralMode(NeutralMode.Brake);
+        intakeMotor.setNeutralMode(NeutralMode.Brake);
+
     }
 
+
+    //TODO rework methods to work with enums (make more dynamic and adaptable for team's needs)
 
     //method to raise arm while limit switch has not been pressed
     public void raiseArm () {
@@ -93,9 +119,16 @@ public class Arm {
         intakeMotor.set(ControlMode.PercentOutput, -intakeSpeed);
     }
 
-    public void test_arm(){
-        armMotor.set(ControlMode.PercentOutput, .5);
-    }
-
+    //enum for selecting what type of control is to be used for the arm
+    //allows the arm and intake to be controlled through one XBoxController (that is also used for driving the robot)
+    //or a second joystick (entirely separate from the driving portion), allowing two members of the team to drive the robot
+    public enum ArmController {
+        xbox(Main.xb), 
+        joystick(Main.j);
+        public final GenericHID h;
+        private ArmController (GenericHID h){
+            this.h = h;
+        }
+    };
 
 }

@@ -12,7 +12,7 @@ public class RobotAssembly extends TimedRobot{
     //private PowerDistributionPanel pdp = new PowerDistributionPanel(0);
     private Timer timer = new Timer();
 
-    public RobotAssembly (DriveTrain dt, Arm a, XboxController xb){
+    public RobotAssembly (DriveTrain dt, Arm a, XboxController xb) {
         this.dt = dt;
         this.xb = xb;
     }
@@ -37,6 +37,7 @@ public class RobotAssembly extends TimedRobot{
     @Override
     public void teleopPeriodic() {
         this.dt.drive(xb);
+        
 
     }
 
