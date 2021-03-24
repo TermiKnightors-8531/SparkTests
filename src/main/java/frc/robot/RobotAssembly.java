@@ -34,40 +34,39 @@ public class RobotAssembly extends TimedRobot{
 
     @Override
     public void teleopInit() {
-
+        if(a == null) System.out.println("Arm is null");
     }
 
     @Override
     public void teleopPeriodic() {
         this.dt.drive(xb);
         switch(armController){
+            //handles code for the single control operation
             case xbox:
                 
-                //checks to see if the 'a' button on the controller has been presesed since last check
-                //if(pressed) --> raises arms
-                if(((XboxController) armController.h).getAButtonPressed()){
-                    a.raiseArm();
+                //raises arm if 'A' button is pressed
+                if(((XboxController) armController.h).getAButton()){
+                       a.raiseArm();
                 }
 
-                //checks to see if the 'b' button on the controller has been presesed since last check
-                if(((XboxController) armController.h).getBButtonPressed()){
-                    a.lowerArm();
+                //lowers arm is 'B' button is pressed
+                if(((XboxController) armController.h).getBButton()){
+                       a.lowerArm();
                 }
 
-                //checks to see if the 'x' button on the controller has been presesed since last check
-                if(((XboxController) armController.h).getXButtonPressed()){
-                    a.raiseArm();
+                //stops arm movement if the A or B button is not pressed
+                if(!((XboxController) armController.h).getAButton()&&((XboxController) armController.h).getAButton()){
+                    a.idleArm();
                 }
 
-                //checks to see if the 'y' button on the controller has been presesed since last check
-                if(((XboxController) armController.h).getYButtonPressed()){
-                    a.lowerArm();
-                }
+                //ends the case of xbox
                 break;
+
+            //handles code for multi-person control of the 
             case joystick:
                 //TODO Handle joystick control of the arm
                 if(((Joystick) armController.h).getRawButton(0)){
-                    
+
                 }
                 break;
         }

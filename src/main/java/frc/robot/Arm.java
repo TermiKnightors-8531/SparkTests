@@ -76,7 +76,6 @@ public class Arm {
     * @param armController: enum value to select the method of controlling the arm (selects between 1 or multiple joysticks)
     * @param armChannel: the channel of the motor controller for the arm 
     * @param intakeChannel: the channel of the motor 
-    * @param intakeSpeed: speed of arm 
     */ 
     public Arm (int armID, int intakeID, ArmController armController, Limit l, int armChannel, int intakeChannel){
         this(armID, intakeID, armController, l);
@@ -94,22 +93,30 @@ public class Arm {
 
     //method to raise arm while limit switch has not been pressed
     public void raiseArm () {
-        if(upSwitch.get())return;       //returns if arm is up
-        while(!upSwitch.get()){
-            armMotor.set(ControlMode.PercentOutput, .5);
+        switch(l){
+            case current: 
+                break;
+            case dio:
+                break;
         }
-            armMotor.set(ControlMode.Disabled, 0);
     }
     
     //method to raise arm while limit switch has not been pressed
     public void lowerArm () {
-        if(downSwitch.get())return;     //returns if arm is down
-        while(!downSwitch.get()){
-            armMotor.set(ControlMode.PercentOutput, -.5);
+        switch(l){
+
+            case current: 
+                
+                break;
+            case dio:
+                
+                break;
         }
-            armMotor.set(ControlMode.Disabled, 0);
     }
 
+    public void idleArm () {
+        armMotor.set(ControlMode.Disabled, 0);
+    }
     //starts intake motor and runs until the stopIntake method is invoked
     public void startIntake () {
         intakeMotor.set(ControlMode.PercentOutput, intakeSpeed);
@@ -133,6 +140,7 @@ public class Arm {
     public static Limit getLimt() {
         return l;
     }
+    
     //enum for selecting what type of control is to be used for the arm
     //allows the arm and intake to be controlled through one XBoxController (that is also used for driving the robot)
     //or a second joystick (entirely separate from the driving portion), allowing two members of the team to drive the robot
@@ -145,15 +153,25 @@ public class Arm {
         }
     };
 
+    //enum used to selecct the control method for stopping the arm movement
+    //case current: 
     public enum Limit {
+        
+        //uses Digital Input limiting on both upper and lower end
         dio,
+
+        //uses current draw to find limit the arm movement
         current,
+
+        //uses a limit switch on the upper end of the arm and current draw on the lower
         hybridUp,
-        hybridDown;
 
-        private Limit (String s){
+        //uses a limit switch on the lower end of the arm and current draw on the upper
+        hybridDown,
 
-        }
+        //uses manual control through a type of joystick or xbox controller
+        manual;
+
         private Limit (){
             
         }
