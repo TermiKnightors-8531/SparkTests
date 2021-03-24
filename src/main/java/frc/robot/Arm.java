@@ -25,6 +25,7 @@ public class Arm {
     //Speed at which the arm moves and the motors spin to intake the balls
     //TODO find best speed for arm and intake
     private final double intakeSpeed = .5;
+    private final double armSpeed = .3;
 
     //ints to hold current which should not be exceeded (used for sensing the arm motor position)
     private final int maxCurrentUp = 0;
@@ -44,6 +45,7 @@ public class Arm {
     public Arm(int armID, int intakeID, ArmController armController, Limit l) {
         this.armID = armID;
         this.intakeID = intakeID;
+        this.armController = armController;
         this.armMotor = new VictorSPX(armID);
         this.intakeMotor = new VictorSPX(intakeID);
         armMotor.configFactoryDefault();
@@ -94,6 +96,8 @@ public class Arm {
     //method to raise arm while limit switch has not been pressed
     public void raiseArm () {
         switch(l){
+            case manual:
+                armMotor.set(ControlMode.PercentOutput, armSpeed);
             case current: 
                 break;
             case dio:
@@ -104,7 +108,8 @@ public class Arm {
     //method to raise arm while limit switch has not been pressed
     public void lowerArm () {
         switch(l){
-
+            case manual:
+                armMotor.set(ControlMode.PercentOutput, -armSpeed);
             case current: 
                 
                 break;
