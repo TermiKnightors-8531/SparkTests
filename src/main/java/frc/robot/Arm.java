@@ -32,7 +32,7 @@ public class Arm {
     private final int maxCurrentDown = 0;
 
     //instance of enum to hold type of arm controller used
-    public static ArmController armController;
+    public ArmController armController;
 
     //instance of limiting type
     public static Limit l;
@@ -65,6 +65,7 @@ public class Arm {
         this(armID, intakeID, armController, l);
         this.upSwitch = upSwitch;
         this.downSwitch = downSwitch;
+        this.armController = armController;
         armMotor.configFactoryDefault();
         armMotor.setNeutralMode(NeutralMode.Brake);
         intakeMotor.configFactoryDefault();
@@ -137,9 +138,6 @@ public class Arm {
         intakeMotor.set(ControlMode.PercentOutput, -intakeSpeed);
     }
 
-    public static ArmController getArmController() {
-        return armController;
-    }
 
     //returns the selected limit method
     public static Limit getLimt() {
