@@ -34,15 +34,36 @@ public class DriveTrain {
         private int fID,rID;                                //ints to hold the CAN ID's
         private CANSparkMax front,rear;                     //motor controller instances
         private int fchan, rchan;                           //possible ints for holding PDP channels for motor controllers
+        private boolean inverted = false; 
 
-        //constructor with CAN IDs
+        /*
+        * Base Constructor for a side
+        * @param fID: the CAN ID of the front motor
+        * @param rID: the CAN ID of the rear motor
+        */
         public side(int fID, int rID){
             this.fID = fID;
             this.rID = rID;
             front = new CANSparkMax(this.fID, MotorType.kBrushed);
+            
             rear =  new CANSparkMax(this.rID, MotorType.kBrushed);
         }
         
+        /*
+        * Constructor for a side with CAN ID's and a boolean to invert control of the side
+        * @param fID: the CAN ID of the front motor
+        * @param rID: the CAN ID of the rear motor
+        * @param inverted: inverts the control of the motor if true
+        */
+        public side(int fID, int rID, boolean inverted){
+            this.fID = fID;
+            this.rID = rID;
+            front = new CANSparkMax(this.fID, MotorType.kBrushed);
+            front.setInverted(this.inverted);
+            rear =  new CANSparkMax(this.rID, MotorType.kBrushed);
+            rear.setInverted(this.inverted);
+        }
+
         //function to drive the two motors at the same speed
         public void drive(double speed) {
             front.set(speed);
