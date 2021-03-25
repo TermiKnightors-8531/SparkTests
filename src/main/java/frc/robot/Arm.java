@@ -24,7 +24,7 @@ public class Arm {
 
     //Speed at which the arm moves and the motors spin to intake the balls
     //TODO find best speed for arm and intake
-    private final double intakeSpeed = .5;
+    private final double intakeSpeed = .37;
     private final double armSpeed = .3;
 
     //ints to hold current which should not be exceeded (used for sensing the arm motor position)
@@ -32,7 +32,7 @@ public class Arm {
     private final int maxCurrentDown = 0;
 
     //instance of enum to hold type of arm controller used
-    public ArmController armController;
+    public static ArmController armController;
 
     //instance of limiting type
     public static Limit l;
@@ -96,46 +96,59 @@ public class Arm {
 
     //method to raise arm while limit switch has not been pressed
     public void raiseArm () {
-        switch(l){
-            case manual:
-                armMotor.set(ControlMode.PercentOutput, armSpeed);
-            case current: 
-                break;
-            case dio:
-                break;
-        }
+        //TODO fix null pointer on l
+        // switch(l){
+        //     case manual:
+        //         armMotor.set(ControlMode.PercentOutput, armSpeed);
+        //     case current: 
+        //         break;
+        //     case dio:
+        //         break;
+        // }
+        //TEMP manual
+        armMotor.set(ControlMode.PercentOutput, armSpeed);
     }
     
     //method to raise arm while limit switch has not been pressed
     public void lowerArm () {
-        switch(l){
-            case manual:
-                armMotor.set(ControlMode.PercentOutput, -armSpeed);
-            case current: 
+        //TODO fix null pointer on l
+        // switch(l){
+        //     case manual:
+        //         armMotor.set(ControlMode.PercentOutput, -armSpeed);
+        //     case current: 
                 
-                break;
-            case dio:
+        //         break;
+        //     case dio:
                 
-                break;
-        }
+        //         break;
+        // }
+        //TEMP manual
+        armMotor.set(ControlMode.PercentOutput, -armSpeed);
     }
 
     public void idleArm () {
-        armMotor.set(ControlMode.Disabled, 0);
+        intakeMotor.set(ControlMode.Disabled, 0);
     }
     //starts intake motor and runs until the stopIntake method is invoked
     public void startIntake () {
         intakeMotor.set(ControlMode.PercentOutput, intakeSpeed);
+        System.out.println("Started Intake");
     }
 
     //stops intake motor 
     public void stopIntake () {
         intakeMotor.set(ControlMode.Disabled, 0);
+        System.out.println("Stopped Intake");
     }
 
     //starts intake motor in reverse at intake speed and runs until the stopIntake method is invoked
     public void reverseIntake() {
         intakeMotor.set(ControlMode.PercentOutput, -intakeSpeed);
+        System.out.println("Reversed Intake");
+    }
+
+    public ArmController getArmController(){
+        return armController;
     }
 
 

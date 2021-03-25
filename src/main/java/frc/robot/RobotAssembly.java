@@ -17,7 +17,7 @@ public class RobotAssembly extends TimedRobot{
     private DriveTrain dt;
     //private PowerDistributionPanel pdp = new PowerDistributionPanel(0);
     private Timer timer = new Timer();
-    private ArmController armController = a.armController;
+    private ArmController armController;
 
     public RobotAssembly (DriveTrain dt, Arm a, XboxController xb) {
         this.dt = dt;
@@ -25,6 +25,10 @@ public class RobotAssembly extends TimedRobot{
         this.a = a;
     }
 
+    @Override
+    public void robotInit() {
+        this.armController = a.getArmController();
+    }
     //TEMP
     @Override
     public void autonomousInit() {
@@ -59,34 +63,34 @@ public class RobotAssembly extends TimedRobot{
             case xbox:
                 
                 //starts intake if 'A' button is pressed
-                if(((XboxController) armController.h).getAButton()){
+                if(xb.getAButton()){
                     a.startIntake();
                 }
 
                 //stops intake if 'B' button is pressed
-                if(((XboxController) armController.h).getBButton()){
+                if(xb.getBButton()){
                     a.stopIntake();
                 }
 
                 //reverses intake if 'Y' button is pressed
-                if(((XboxController) armController.h).getYButton()){
+                if(xb.getYButton()){
                     a.reverseIntake();
                 }
 
                 //raises arm is the DPAD value is 315, 360, or 45
-                if(((XboxController) armController.h).getPOV()==315 || ((XboxController) armController.h).getPOV()==360 || ((XboxController) armController.h).getPOV()==45){
+                if(xb.getPOV()==315 || xb.getPOV()==360 || xb.getPOV()==0|| xb.getPOV()==45){
                     a.raiseArm();
                     System.out.println("Rasing arm");
                 }
 
                 //lowers arm is the DPAD value is 225, 180, or 135
-                if(((XboxController) armController.h).getPOV()==225 || ((XboxController) armController.h).getPOV()==180 || ((XboxController) armController.h).getPOV()==135){
+                else if(xb.getPOV()==225 || xb.getPOV()==180 || xb.getPOV()==135){
                     a.lowerArm();
                     System.out.println("Lowering arm");
                 }
 
                 //stops intake if the DPAD has no input (idle)
-                if(((XboxController) armController.h).getPOV()==315 || ((XboxController) armController.h).getPOV()==360 || ((XboxController) armController.h).getPOV()==45){
+                else {
                     a.idleArm();
                     System.out.println("Arm is neutral");
                 }
@@ -97,12 +101,12 @@ public class RobotAssembly extends TimedRobot{
             //handles code for multi-person control of the 
             case joystick:
                 //TODO Handle joystick control of the arm
-                if(((Joystick) armController.h).getRawButton(0)){
+                // if(((Joystick) armController.h).getRawButton(0)){
 
-                }
+                // }
                 break;
         }
     }
 
-
+ 
 }
