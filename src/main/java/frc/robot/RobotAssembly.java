@@ -60,7 +60,7 @@ public class RobotAssembly extends TimedRobot{
         switch(armController){
             //handles code for the single joystick control operation
             case xbox:
-                
+                System.out.println("Xbox");
                 //starts intake if 'A' button is pressed
                 if(xb.getAButton()){
                     a.startIntake();
