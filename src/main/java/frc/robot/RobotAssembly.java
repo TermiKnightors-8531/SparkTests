@@ -15,7 +15,6 @@ public class RobotAssembly extends TimedRobot{
     private  Arm a;
     private XboxController xb;
     private DriveTrain dt;
-    //private PowerDistributionPanel pdp = new PowerDistributionPanel(0);
     private Timer timer = new Timer();
     private ArmController armController;
 
@@ -77,22 +76,21 @@ public class RobotAssembly extends TimedRobot{
                     a.reverseIntake();
                 }
 
-                //raises arm is the DPAD value is 315, 360, or 45
+                //if DPAD value is not pressed set the motor to idle
+                if(xb.getPOV()==-1){
+                    a.idleArm();
+                }
+
+                //raises arm is the DPAD value is 315, 360, 0, or 45
                 if(xb.getPOV()==315 || xb.getPOV()==360 || xb.getPOV()==0|| xb.getPOV()==45){
                     a.raiseArm();
                     System.out.println("Rasing arm");
                 }
 
                 //lowers arm is the DPAD value is 225, 180, or 135
-                else if(xb.getPOV()==225 || xb.getPOV()==180 || xb.getPOV()==135){
+                if(xb.getPOV()==225 || xb.getPOV()==180 || xb.getPOV()==135){
                     a.lowerArm();
                     System.out.println("Lowering arm");
-                }
-
-                //stops intake if the DPAD has no input (idle)
-                else {
-                    a.idleArm();
-                    System.out.println("Arm is neutral");
                 }
 
                 //ends the case of xbox
@@ -101,9 +99,6 @@ public class RobotAssembly extends TimedRobot{
             //handles code for multi-person control of the 
             case joystick:
                 //TODO Handle joystick control of the arm
-                // if(((Joystick) armController.h).getRawButton(0)){
-
-                // }
                 break;
         }
     }
