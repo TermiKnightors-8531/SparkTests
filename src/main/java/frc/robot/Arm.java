@@ -24,8 +24,8 @@ public class Arm {
 
     //Speed at which the arm moves and the motors spin to intake the balls
     //TODO find best speed for arm and intake
-    private final double intakeSpeed = .37;
-    private final double armSpeed = .3;
+    private final double intakeSpeed = .75;
+    private final double armSpeed = .43;
 
     //ints to hold current which should not be exceeded (used for sensing the arm motor position)
     private final int maxCurrentUp = 0;
@@ -127,7 +127,7 @@ public class Arm {
     }
 
     public void idleArm () {
-        intakeMotor.set(ControlMode.Disabled, 0);
+        armMotor.set(ControlMode.Disabled, 0);
     }
     //starts intake motor and runs until the stopIntake method is invoked
     public void startIntake () {

@@ -62,33 +62,34 @@ public class RobotAssembly extends TimedRobot{
             case xbox:
                 System.out.println("Xbox");
                 //starts intake if 'A' button is pressed
-                if(xb.getAButton()){
+                System.out.println(this.xb.getAButton());
+                if(this.xb.getAButton()){
                     a.startIntake();
                 }
 
                 //stops intake if 'B' button is pressed
-                if(xb.getBButton()){
+                if(this.xb.getBButton()){
                     a.stopIntake();
                 }
 
                 //reverses intake if 'Y' button is pressed
-                if(xb.getYButton()){
+                if(this.xb.getYButton()){
                     a.reverseIntake();
                 }
 
                 //if DPAD value is not pressed set the motor to idle
-                if(xb.getPOV()==-1){
+                if(this.xb.getPOV()==-1){
                     a.idleArm();
                 }
 
                 //raises arm is the DPAD value is 315, 360, 0, or 45
-                if(xb.getPOV()==315 || xb.getPOV()==360 || xb.getPOV()==0|| xb.getPOV()==45){
+                if(this.xb.getPOV()==315 || this.xb.getPOV()==360 || this.xb.getPOV()==0|| this.xb.getPOV()==45){
                     a.raiseArm();
                     System.out.println("Rasing arm");
                 }
 
                 //lowers arm is the DPAD value is 225, 180, or 135
-                if(xb.getPOV()==225 || xb.getPOV()==180 || xb.getPOV()==135){
+                if(this.xb.getPOV()==225 || this.xb.getPOV()==180 || this.xb.getPOV()==135){
                     a.lowerArm();
                     System.out.println("Lowering arm");
                 }
