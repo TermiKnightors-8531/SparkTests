@@ -51,7 +51,7 @@ public class RobotAssembly extends TimedRobot{
     @Override
     public void teleopPeriodic() {
         //drives with joysticks at 75%
-        this.dt.drive(xb,.75,.75);
+        this.dt.drive(xb,.55,.55);
         /*
         * A Button: Starts Intake Motor (Arm.startIntake)
         * B Button: Stops Intake Motor  (Arm.stopIntake)
@@ -104,15 +104,29 @@ public class RobotAssembly extends TimedRobot{
 
                 //if the joystick is pushed forwards, the arm is raised
                 if(j.getY()>.2){
-                    a.lowerArm();
+                    a.raiseArm();
                 }
 
                 //if the joystick is pulled backwards, the arm is lowered              
                 if(j.getY()<-.2) {
-                    a.raiseArm();
+                    a.lowerArm();
                 }
 
+                if(j.getY()>-.2 && j.getY()<.2) {
+                    a.idleArm();
+                }
 
+                if(j.getRawButton(1)){
+                    a.startIntake();
+                }
+
+                if(j.getRawButton(2)){
+                    a.stopIntake();
+                }
+
+                if(j.getRawButton(3)){
+                    a.reverseIntake();
+                }
                 break;
         }
     }
