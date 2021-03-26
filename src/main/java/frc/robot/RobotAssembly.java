@@ -49,7 +49,8 @@ public class RobotAssembly extends TimedRobot{
 
     @Override
     public void teleopPeriodic() {
-        this.dt.drive(xb);
+        //drives with joysticks at 75%
+        this.dt.drive(xb,.75,.75);
         /*
         * A Button: Starts Intake Motor (Arm.startIntake)
         * B Button: Stops Intake Motor  (Arm.stopIntake)

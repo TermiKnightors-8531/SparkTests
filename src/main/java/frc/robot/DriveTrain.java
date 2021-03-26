@@ -29,6 +29,12 @@ public class DriveTrain {
         this.right.drive(xb.getY(Hand.kRight));
     }
 
+    //function to drive robot based on the left and right joystick
+    public void drive(XboxController xb, double left, double right){
+        this.left.drive(xb.getY(Hand.kLeft),left);
+        this.right.drive(xb.getY(Hand.kRight),right);
+    }
+
     //class to represent a single side (two motors per wheel)
     class side {
         private int fID,rID;                                //ints to hold the CAN ID's
@@ -69,6 +75,13 @@ public class DriveTrain {
             front.set(speed);
             rear.set(speed);
         }
+
+        //function to drive the two motors at the same speed
+        public void drive(double speed, double scaler) {
+            front.set((speed*scaler));
+            rear.set((speed*scaler));
+        }
+
 
     }
 
