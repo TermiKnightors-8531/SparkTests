@@ -76,12 +76,27 @@ public class DriveTrain {
             rear.set(speed);
         }
 
-        //function to drive the two motors at the same speed
+        /*
+        * function to drive the two motors at the same speed with a prescaled value 
+        * @param speed: speed from -1 to 1 of the two motors
+        * @param scaler: number from 0 to 1.00 to scale the input of the joysticks
+        */
         public void drive(double speed, double scaler) {
             front.set((speed*scaler));
             rear.set((speed*scaler));
         }
 
+        //TODO figure out the deadzone implementation
+        /*
+        * function to drive the two motors at the same speed with joystick adjustment
+        * @param speed: speed from -1 to 1 of the two motors
+        * @param scaler: number from 0 to 1.00 to scale the input of the joysticks
+        * @param deadzone: range of dead zone of the joystick
+        */        
+        public void drive(double speed, double scaler, double deadzone){
+            front.set((speed*scaler));
+            rear.set((speed*scaler));
+        }
 
     }
 

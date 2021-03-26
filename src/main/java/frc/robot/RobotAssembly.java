@@ -17,6 +17,7 @@ public class RobotAssembly extends TimedRobot{
     private DriveTrain dt;
     private Timer timer = new Timer();
     private ArmController armController;
+    private static Joystick j = Main.j;
 
     public RobotAssembly (DriveTrain dt, Arm a, XboxController xb) {
         this.dt = dt;
@@ -99,7 +100,18 @@ public class RobotAssembly extends TimedRobot{
 
             //handles code for multi-person control of the 
             case joystick:
-                //TODO Handle joystick control of the arm
+
+                //if the joystick is pushed forwards, the arm is raised
+                if(j.getY()>.2){
+                    a.lowerArm();
+                }
+
+                //if the joystick is pulled backwards, the arm is lowered              
+                if(j.getY()<-.2) {
+                    a.raiseArm();
+                }
+
+
                 break;
         }
     }
