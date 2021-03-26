@@ -36,7 +36,7 @@ public class DriveTrain {
     }
 
     //class to represent a single side (two motors per wheel)
-    class side {
+    static class side {
         private int fID,rID;                                //ints to hold the CAN ID's
         private CANSparkMax front,rear;                     //motor controller instances
         private int fchan, rchan;                           //possible ints for holding PDP channels for motor controllers
@@ -64,6 +64,7 @@ public class DriveTrain {
         public side(int fID, int rID, boolean inverted){
             this.fID = fID;
             this.rID = rID;
+            this.inverted = inverted;
             front = new CANSparkMax(this.fID, MotorType.kBrushed);
             front.setInverted(this.inverted);
             rear =  new CANSparkMax(this.rID, MotorType.kBrushed);

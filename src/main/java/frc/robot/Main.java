@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Arm.ArmController;
 import frc.robot.Arm.Limit;
+import frc.robot.DriveTrain.side;
 
 public final class Main {
   private Main() {}
@@ -24,8 +25,9 @@ public final class Main {
 
   public static Joystick j;
   public static void main(String... args) {
+
     //specifices a drive train with motor controller IDs 1 and 2 for the left side motors and 3 and 4 for the right side
-    DriveTrain dt = new DriveTrain(1,2,3,4);
+    DriveTrain dt = new DriveTrain((new side(1,2,false)), new side(3,4,true));
 
     //Creates an arm with a CAN ID of the 10 for the arm motor and a CAN ID of 11 for the intake motor
     //manual control of the arm is used, so no autonomous limiting methods are currently implemented
