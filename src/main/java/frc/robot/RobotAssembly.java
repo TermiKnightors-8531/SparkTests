@@ -1,24 +1,27 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Arm.ArmController;
 
 public class RobotAssembly extends TimedRobot{
+    //Variable Declaration: instances defined to be referenced throughout the class
     private  Arm a;
     private XboxController xb;
-    private DriveTrain dt;
-    private Timer timer = new Timer();
+    private DriveTrain dt;                  
+    private Timer timer = new Timer();              //Currently unimplemented
     private ArmController armController;
     private static Joystick j = Main.j;
 
+    /*
+    * Base Constructor for a RobotAssembly to be used in controlling all aspects of the robot
+    * @param dt: the DriveTrain for operating the wheels of the robot
+    * @param a: the Arm class containg intake and arm control methods
+    * @param xb: the xbox controller for controlling the movements of the robot
+    */
     public RobotAssembly (DriveTrain dt, Arm a, XboxController xb) {
         this.dt = dt;
         this.xb = xb;
@@ -43,6 +46,7 @@ public class RobotAssembly extends TimedRobot{
 
     @Override
     public void teleopInit() {
+        //DEBUG tests
         if(a == null) System.out.println("Arm is null");
         if(a.armMotor == null) System.out.println("Arm Motor is null");
         if(a.intakeMotor == null) System.out.println("Intake Motor is null");
@@ -50,8 +54,11 @@ public class RobotAssembly extends TimedRobot{
 
     @Override
     public void teleopPeriodic() {
-        //drives with joysticks at 75%
+        //drives with joysticks at 55%
+        //TODO write exponential function with asymptote to scale joystick control with more precision at low speeds and more power at high ends
+        //^^^^Currently limits full power output
         this.dt.drive(xb,.55,.55);
+
         /*
         * A Button: Starts Intake Motor (Arm.startIntake)
         * B Button: Stops Intake Motor  (Arm.stopIntake)
@@ -99,8 +106,10 @@ public class RobotAssembly extends TimedRobot{
                 //ends the case of xbox
                 break;
 
-            //handles code for multi-person control of the 
+            //handles code for multi-person control of the arm and intake
             case joystick:
+
+                //TODO find correct button ID's
 
                 //if the joystick is pushed forwards, the arm is raised
                 if(j.getY()>.2){
@@ -112,6 +121,7 @@ public class RobotAssembly extends TimedRobot{
                     a.lowerArm();
                 }
 
+                //if the joystick is at or around center, the arm motor is disabled
                 if(j.getY()>-.2 && j.getY()<.2) {
                     a.idleArm();
                 }

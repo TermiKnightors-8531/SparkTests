@@ -23,11 +23,11 @@ public class Arm {
     private int armChannel, intakeChannel;
 
     //Speed at which the arm moves and the motors spin to intake the balls
-    //TODO find best speed for arm and intake
     private final double intakeSpeed = .75;
     private final double armSpeed = .43;
 
     //ints to hold current which should not be exceeded (used for sensing the arm motor position)
+    //TODO implement at later date
     private final int maxCurrentUp = 0;
     private final int maxCurrentDown = 0;
 
@@ -73,7 +73,8 @@ public class Arm {
     }
 
 
-    /*Constructor for Arm with PowerDistributionPanel channels for monitoring current
+    /*
+    * Constructor for Arm with PowerDistributionPanel channels for monitoring current
     * @param armID: the CAN ID of the arm
     * @param intakeID: the CAN ID of the intake motor
     * @param armController: enum value to select the method of controlling the arm (selects between 1 or multiple joysticks)
@@ -91,44 +92,23 @@ public class Arm {
 
     }
 
-
-    //TODO rework methods to work with enums (make more dynamic and adaptable for team's needs)
-
-    //method to raise arm while limit switch has not been pressed
+    //method to raise arm
     public void raiseArm () {
-        //TODO fix null pointer on l
-        // switch(l){
-        //     case manual:
-        //         armMotor.set(ControlMode.PercentOutput, armSpeed);
-        //     case current: 
-        //         break;
-        //     case dio:
-        //         break;
-        // }
-        //TEMP manual
+        //TODO implement enum control
         armMotor.set(ControlMode.PercentOutput, armSpeed);
     }
     
-    //method to raise arm while limit switch has not been pressed
+    //method to lower arm
     public void lowerArm () {
-        //TODO fix null pointer on l
-        // switch(l){
-        //     case manual:
-        //         armMotor.set(ControlMode.PercentOutput, -armSpeed);
-        //     case current: 
-                
-        //         break;
-        //     case dio:
-                
-        //         break;
-        // }
-        //TEMP manual
+        //TODO implement enum control
         armMotor.set(ControlMode.PercentOutput, -armSpeed);
     }
 
+    //disables arm motor
     public void idleArm () {
         armMotor.set(ControlMode.Disabled, 0);
     }
+
     //starts intake motor and runs until the stopIntake method is invoked
     public void startIntake () {
         intakeMotor.set(ControlMode.PercentOutput, intakeSpeed);
@@ -147,6 +127,7 @@ public class Arm {
         System.out.println("Reversed Intake");
     }
 
+    //returns the selected Arm Controller
     public ArmController getArmController(){
         return armController;
     }
@@ -157,9 +138,11 @@ public class Arm {
         return l;
     }
     
-    //enum for selecting what type of control is to be used for the arm
-    //allows the arm and intake to be controlled through one XBoxController (that is also used for driving the robot)
-    //or a second joystick (entirely separate from the driving portion), allowing two members of the team to drive the robot
+    /*
+    * enum for selecting what type of control is to be used for the arm
+    * allows the arm and intake to be controlled through one XBoxController (that is also used for driving the robot)
+    * or a second joystick (entirely separate from the driving portion), allowing two members of the team to drive the robot
+    */
     public enum ArmController {
         xbox(Main.xb), 
         joystick(Main.j);
@@ -169,8 +152,10 @@ public class Arm {
         }
     };
 
-    //enum used to selecct the control method for stopping the arm movement
-    //case current: 
+    /*
+    * enum used to select the control method for stopping the arm movement
+    * CURRENTLY-- manual controll only limited
+    */
     public enum Limit {
         
         //uses Digital Input limiting on both upper and lower end

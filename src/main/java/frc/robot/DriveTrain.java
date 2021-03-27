@@ -35,7 +35,10 @@ public class DriveTrain {
         this.right.drive(xb.getY(Hand.kRight),right);
     }
 
-    //class to represent a single side (two motors per wheel)
+    /*
+    * class to represent a single side (two motors per wheel)
+    * defined as static to allow access without super class reference
+    */
     static class side {
         private int fID,rID;                                //ints to hold the CAN ID's
         private CANSparkMax front,rear;                     //motor controller instances
@@ -71,7 +74,7 @@ public class DriveTrain {
             rear.setInverted(this.inverted);
         }
 
-        //function to drive the two motors at the same speed
+        //basic function to drive the two motors at the same speed based on a given speed 
         public void drive(double speed) {
             front.set(speed);
             rear.set(speed);
@@ -87,12 +90,12 @@ public class DriveTrain {
             rear.set((speed*scaler));
         }
 
-        //TODO figure out the deadzone implementation
+        //TODO complete deadzone implementation
         /*
         * function to drive the two motors at the same speed with joystick adjustment
         * @param speed: speed from -1 to 1 of the two motors
         * @param scaler: number from 0 to 1.00 to scale the input of the joysticks
-        * @param deadzone: range of dead zone of the joystick
+        * @param deadzone: range of dead zone (an area of no control) for the joystick (prevents 'ghost driving')
         */        
         public void drive(double speed, double scaler, double deadzone){
             front.set((speed*scaler));
