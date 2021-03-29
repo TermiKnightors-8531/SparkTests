@@ -1,6 +1,10 @@
 package frc.robot;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.XboxController;
@@ -31,6 +35,11 @@ public class DriveTrain {
 
     //function to drive robot based on the left and right joystick
     public void drive(XboxController xb, double left, double right){
+        this.left.drive(xb.getY(Hand.kLeft),left);
+        this.right.drive(xb.getY(Hand.kRight),right);
+    }
+
+    public void gearDrive(XboxController xb){ 
         this.left.drive(xb.getY(Hand.kLeft),left);
         this.right.drive(xb.getY(Hand.kRight),right);
     }
@@ -102,6 +111,31 @@ public class DriveTrain {
             rear.set((speed*scaler));
         }
 
+    }
+
+    static class gear {
+        /*
+        * Gear 0: .40
+        * Gear 1: .50
+        * Gear 2: .55
+        * Gear 3: .70
+        */
+        private ArrayList<Double> speeds = new ArrayList<>(Arrays.asList(.40, .50, .55, .70));
+        private int currentGear = 2;
+
+        public double getScaler() {
+            return speeds.get(currentGear);
+        }
+
+        public void incrementGear(){
+            if(currentGear<4)currentGear++;
+            System.out.println(currentGear);
+        }
+
+        public void decrementGear(){
+            if(currentGear>0)currentGear--;
+            System.out.println(currentGear);
+        }
     }
 
 }
