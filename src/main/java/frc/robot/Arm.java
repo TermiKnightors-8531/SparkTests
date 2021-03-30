@@ -112,19 +112,16 @@ public class Arm {
     //starts intake motor and runs until the stopIntake method is invoked
     public void startIntake () {
         intakeMotor.set(ControlMode.PercentOutput, intakeSpeed);
-        System.out.println("Started Intake");
     }
 
     //stops intake motor 
     public void stopIntake () {
         intakeMotor.set(ControlMode.Disabled, 0);
-        System.out.println("Stopped Intake");
     }
 
     //starts intake motor in reverse at intake speed and runs until the stopIntake method is invoked
     public void reverseIntake() {
         intakeMotor.set(ControlMode.PercentOutput, -intakeSpeed);
-        System.out.println("Reversed Intake");
     }
 
     //returns the selected Arm Controller

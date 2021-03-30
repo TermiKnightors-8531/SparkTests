@@ -46,10 +46,7 @@ public class RobotAssembly extends TimedRobot{
 
     @Override
     public void teleopInit() {
-        //DEBUG tests
-        if(a == null) System.out.println("Arm is null");
-        if(a.armMotor == null) System.out.println("Arm Motor is null");
-        if(a.intakeMotor == null) System.out.println("Intake Motor is null");
+        
     }
 
     @Override
@@ -69,7 +66,6 @@ public class RobotAssembly extends TimedRobot{
             //handles code for the single joystick control operation
             case xbox:
                 //starts intake if 'A' button is pressed
-                System.out.println(this.xb.getAButton());
                 if(this.xb.getAButton()){
                     a.startIntake();
                 }
