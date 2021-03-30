@@ -14,11 +14,12 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 public class DriveTrain {
     //instances of side for both left and right side (container for left and right wheel motor controllers)
     private side left, right; 
-
+    public Gear gear;
     //constructor with two sides 
     public DriveTrain(side left, side right){
         this.left = left;
         this.right = right;
+        Gear gear = new Gear();
     }
 
     //constructor to create two sides from 4 IDs
@@ -39,9 +40,10 @@ public class DriveTrain {
         this.right.drive(xb.getY(Hand.kRight),right);
     }
 
+    //drives based on the selected gear
     public void gearDrive(XboxController xb){ 
-        this.left.drive(xb.getY(Hand.kLeft),left);
-        this.right.drive(xb.getY(Hand.kRight),right);
+        this.left.drive(xb.getY(Hand.kLeft), gear.getScaler());
+        this.right.drive(xb.getY(Hand.kRight), gear.getScaler());
     }
 
     /*
@@ -54,6 +56,7 @@ public class DriveTrain {
         private int fchan, rchan;                           //possible ints for holding PDP channels for motor controllers
         private boolean inverted = false; 
 
+        public Gear gear;
         /*
         * Base Constructor for a side
         * @param fID: the CAN ID of the front motor
@@ -113,22 +116,33 @@ public class DriveTrain {
 
     }
 
-    static class gear {
+    static class Gear {
         /*
         * Gear 0: .40
         * Gear 1: .50
         * Gear 2: .55
         * Gear 3: .70
         */
-        private ArrayList<Double> speeds = new ArrayList<>(Arrays.asList(.40, .50, .55, .70));
-        private int currentGear = 2;
+        private double[] speeds;
+        private int totalGears = 4;
+        private int currentGear = 1;
+        public Gear () {
+            double[] speed = {.40, .50, .55, .70};
+            this.speeds = speed;
+            this.currentGear = 2;
+        }
 
+        public Gear (double[] speeds, int totalGears, int currentGear){
+            this.speeds = speeds;
+            this.totalGears = totalGears;
+            this.currentGear = currentGear;
+        }
         public double getScaler() {
-            return speeds.get(currentGear);
+            return speeds[currentGear];
         }
 
         public void incrementGear(){
-            if(currentGear<4)currentGear++;
+            if(currentGear<(totalGears-1))currentGear++;
             System.out.println(currentGear);
         }
 

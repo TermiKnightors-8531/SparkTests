@@ -3,7 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
-
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Arm.ArmController;
 
@@ -57,8 +57,7 @@ public class RobotAssembly extends TimedRobot{
         //drives with joysticks at 55%
         //TODO write exponential function with asymptote to scale joystick control with more precision at low speeds and more power at high ends
         //^^^^Currently limits full power output
-        this.dt.drive(xb,.55,.55);
-
+        this.dt.gearDrive(xb);
         /*
         * A Button: Starts Intake Motor (Arm.startIntake)
         * B Button: Stops Intake Motor  (Arm.stopIntake)
@@ -69,7 +68,6 @@ public class RobotAssembly extends TimedRobot{
         switch(armController){
             //handles code for the single joystick control operation
             case xbox:
-                System.out.println("Xbox");
                 //starts intake if 'A' button is pressed
                 System.out.println(this.xb.getAButton());
                 if(this.xb.getAButton()){
@@ -94,15 +92,22 @@ public class RobotAssembly extends TimedRobot{
                 //raises arm is the DPAD value is 315, 360, 0, or 45
                 if(this.xb.getPOV()==315 || this.xb.getPOV()==360 || this.xb.getPOV()==0|| this.xb.getPOV()==45){
                     a.raiseArm();
-                    System.out.println("Rasing arm");
                 }
 
                 //lowers arm is the DPAD value is 225, 180, or 135
                 if(this.xb.getPOV()==225 || this.xb.getPOV()==180 || this.xb.getPOV()==135){
                     a.lowerArm();
-                    System.out.println("Lowering arm");
                 }
 
+                //decrements gear number if the left bumper is pressed
+                if(this.xb.getBumper(Hand.kLeft)){
+                    dt.gear.decrementGear();
+                }
+
+                //increments gear number if the right bumper is pressed
+                if(this.xb.getBumper(Hand.kRight)){
+                    dt.gear.incrementGear();
+                }
                 //ends the case of xbox
                 break;
 
