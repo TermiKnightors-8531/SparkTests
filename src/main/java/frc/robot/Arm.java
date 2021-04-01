@@ -109,6 +109,10 @@ public class Arm {
         armMotor.set(ControlMode.Disabled, 0);
     }
 
+    public void setIntakeSpeed(){
+        
+    }
+
     //starts intake motor and runs until the stopIntake method is invoked
     public void startIntake () {
         intakeMotor.set(ControlMode.PercentOutput, intakeSpeed);
