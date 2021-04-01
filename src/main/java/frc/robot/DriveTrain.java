@@ -19,7 +19,7 @@ public class DriveTrain {
     public DriveTrain(side left, side right){
         this.left = left;
         this.right = right;
-        Gear gear = new Gear();
+        this.gear = new twoSpeed();
     }
 
     //constructor to create two sides from 4 IDs

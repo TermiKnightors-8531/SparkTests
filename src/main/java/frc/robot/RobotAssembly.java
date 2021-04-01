@@ -104,6 +104,7 @@ public class RobotAssembly extends TimedRobot{
                 if(this.xb.getBumper(Hand.kRight)){
                     dt.gear.incrementGear();
                 }
+                
                 //ends the case of xbox
                 break;
 
