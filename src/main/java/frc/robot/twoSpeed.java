@@ -10,11 +10,13 @@ public class twoSpeed extends Gear{
     @Override 
     public void incrementGear() {
         this.current = 1;
+        System.out.println("High Gear");
     }
 
     @Override
     public void decrementGear() {
         this.current = 0;
+        System.out.println("Low Gear");
     }
 
     @Override

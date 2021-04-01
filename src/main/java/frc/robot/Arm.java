@@ -23,8 +23,8 @@ public class Arm {
     private int armChannel, intakeChannel;
 
     //Speed at which the arm moves and the motors spin to intake the balls
-    private final double intakeSpeed = .75;
-    private final double armSpeed = .43;
+    private final double intakeSpeed = .93;
+    private double armSpeed = .43;
 
     //ints to hold current which should not be exceeded (used for sensing the arm motor position)
     //TODO implement at later date
@@ -109,8 +109,8 @@ public class Arm {
         armMotor.set(ControlMode.Disabled, 0);
     }
 
-    public void setIntakeSpeed(){
-        
+    public void setIntakeSpeed(double d){
+        this.armSpeed = d;
     }
 
     //starts intake motor and runs until the stopIntake method is invoked
@@ -127,6 +127,15 @@ public class Arm {
     public void reverseIntake() {
         intakeMotor.set(ControlMode.PercentOutput, -intakeSpeed);
     }
+
+    public void startIntake(Joystick j){
+        intakeMotor.set(ControlMode.PercentOutput, j.getThrottle());
+    }
+
+    public void reverseIntake(Joystick j){
+        intakeMotor.set(ControlMode.PercentOutput, -j.getThrottle());
+    }
+
 
     //returns the selected Arm Controller
     public ArmController getArmController(){

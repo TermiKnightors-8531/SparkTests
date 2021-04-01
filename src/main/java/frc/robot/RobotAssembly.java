@@ -55,6 +55,15 @@ public class RobotAssembly extends TimedRobot{
         //TODO write exponential function with asymptote to scale joystick control with more precision at low speeds and more power at high ends
         //^^^^Currently limits full power output
         this.dt.gearDrive(xb);
+        //decrements gear number if the left bumper is pressed
+        if(this.xb.getBumper(Hand.kLeft)){
+            dt.gear.decrementGear();
+        }
+
+        //increments gear number if the right bumper is pressed
+        if(this.xb.getBumper(Hand.kRight)){
+            dt.gear.incrementGear();
+        }
         /*
         * A Button: Starts Intake Motor (Arm.startIntake)
         * B Button: Stops Intake Motor  (Arm.stopIntake)
@@ -95,22 +104,14 @@ public class RobotAssembly extends TimedRobot{
                     a.lowerArm();
                 }
 
-                //decrements gear number if the left bumper is pressed
-                if(this.xb.getBumper(Hand.kLeft)){
-                    dt.gear.decrementGear();
-                }
-
-                //increments gear number if the right bumper is pressed
-                if(this.xb.getBumper(Hand.kRight)){
-                    dt.gear.incrementGear();
-                }
                 
                 //ends the case of xbox
                 break;
 
             //handles code for multi-person control of the arm and intake
             case joystick:
-
+            // this.a.setIntakeSpeed(j.getThrottle());
+            // System.out.println("Throttle: "+ j.getThrottle());
                 //TODO find correct button ID's
 
                 //if the joystick is pushed forwards, the arm is raised
